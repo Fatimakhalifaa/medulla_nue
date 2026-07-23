@@ -1003,6 +1003,25 @@ namespace cuts
     }
     REGISTER_CUT_SCOPE(RegistrationScope::True, neutrino_pdg, neutrino_pdg);
 
+    template<class T>
+    bool leading_electron_energy_cut(const T & obj, std::vector<double> params={25.0})
+    {
+        if(params.size() != 1)
+            throw std::invalid_argument("leading_electron_energy_cut requires exactly the energy threshold");
+
+        size_t i = selectors::leading_electron(obj);
+        if (i == kNoMatch) return false;
+        const auto & p = obj.particles[i];
+
+        double energy_threshold = params[0];
+
+        if (std::isnan(pvars::energy(p)))
+        {
+            return false; // or true, depending on how you want to handle NaN values
+        }
+        return pvars::energy(p) > energy_threshold;
+    }
+    REGISTER_CUT_SCOPE(RegistrationScope::Both, leading_electron_energy_cut, leading_electron_energy_cut);
 
     template<class T>
     bool leading_muon_energy_cut(const T & obj, std::vector<double> params={25.0})
@@ -1045,12 +1064,12 @@ namespace cuts
     }
 
     template<class T>
-    bool muon_softmax_cut(const T & obj, std::vector<double> params={0.5, 1.0})
+    bool electron_softmax_cut(const T & obj, std::vector<double> params={0.5, 1.0})
     {
         if(params.size() != 2)
-            throw std::invalid_argument("muon_softmax_cut requires exactly two parameters: the softmax threshold and the direction of the cut.");
+            throw std::invalid_argument("electron_softmax_cut requires exactly two parameters: the softmax threshold and the direction of the cut.");
 
-        size_t i = selectors::leading_muon(obj);
+        size_t i = selectors::leading_electron(obj);
         if (i == kNoMatch) return false;
         const auto & p = obj.particles[i];
 
@@ -1058,21 +1077,21 @@ namespace cuts
         double direction = params[1];
 
         // Added <T> here so the template parameter can be resolved
-        if (std::isnan(pvars::muon_softmax<T>(p)))
+        if (std::isnan(pvars::electron_softmax<T>(p)))
         {
             return false; 
         }
-        return (pvars::muon_softmax<T>(p) > softmax_threshold); 
+        return (pvars::electron_softmax<T>(p) > softmax_threshold); 
     }
-    REGISTER_CUT_SCOPE(RegistrationScope::Reco, muon_softmax_cut, muon_softmax_cut);
+    REGISTER_CUT_SCOPE(RegistrationScope::Reco, electron_softmax_cut, electron_softmax_cut);
 
     template<class T>
-    bool primary_muon_softmax_cut(const T & obj, std::vector<double> params={0.5, 1.0})
+    bool primary_electron_softmax_cut(const T & obj, std::vector<double> params={0.5, 1.0})
     {
         if(params.size() != 2)
-            throw std::invalid_argument("primary_muon_softmax_cut requires exactly two parameters: the softmax threshold and the direction of the cut.");
+            throw std::invalid_argument("primary_electron_softmax_cut requires exactly two parameters: the softmax threshold and the direction of the cut.");
 
-        size_t i = selectors::leading_muon(obj);
+        size_t i = selectors::leading_electron(obj);
         if (i == kNoMatch) return false;
         const auto & p = obj.particles[i];
     
@@ -1086,7 +1105,32 @@ namespace cuts
         }
         return checkSoftmax(pvars::primary_softmax<T>(p), softmax_threshold, direction);
     }
-    REGISTER_CUT_SCOPE(RegistrationScope::Reco, primary_muon_softmax_cut, primary_muon_softmax_cut);
+    REGISTER_CUT_SCOPE(RegistrationScope::Reco, primary_electron_softmax_cut, primary_electron_softmax_cut);
+
+  
+    template<class T>
+    double electron_beam_open_angle(const T & obj)
+    {
+        size_t i = selectors::leading_electron(obj);
+        if (i == kNoMatch) return -10.0;
+        const auto & p = obj.particles[i];
+
+        utilities::three_vector p_dir = {pvars::px(p), pvars::py(p), pvars::pz(p)};
+        utilities::three_vector vtx = {obj.vertex[0], obj.vertex[1], obj.vertex[2]};
+
+        p_dir = utilities::normalize(p_dir);
+        utilities::three_vector unit;
+        if constexpr(!BEAM_IS_NUMI)
+            unit = std::make_tuple(0, 0, 1);
+        else
+        {
+            utilities::three_vector beam = std::make_tuple(315.120380 + std::get<0>(vtx), 33.644912 + std::get<1>(vtx), 733.632532 + std::get<2>(vtx));
+            unit = utilities::normalize(beam);
+        }
+        double open_angle = std::acos(std::get<0>(p_dir) * std::get<0>(unit) + std::get<1>(p_dir) * std::get<1>(unit) + std::get<2>(p_dir) * std::get<2>(unit));
+        return open_angle;
+    }
+    REGISTER_VAR_SCOPE(RegistrationScope::Both, electron_beam_open_angle, electron_beam_open_angle);
 
 
     template<class T>

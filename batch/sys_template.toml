@@ -11,7 +11,7 @@ path = 'output_sys.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
-name = 'reco_leading_muon_ke'
+name = 'reco_leading_electron_ke'
 bins = [15, 0, 3000]
 
 [[sys]]
