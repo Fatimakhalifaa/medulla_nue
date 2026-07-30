@@ -758,25 +758,25 @@ namespace vars
     REGISTER_VAR_SCOPE(RegistrationScope::Both, pn_lp, pn_lp);
 
     /**
-     * @brief Variable for the opening angle between leading muon and proton.
-     * @details The leading muon and proton are defined as the particles with the
+     * @brief Variable for the opening angle between leading electron and proton.
+     * @details The leading electron and proton are defined as the particles with the
      * highest kinetic energy. The opening angle is defined as the arccosine of
-     * the dot product of the momentum vectors of the leading muon and proton.
+     * the dot product of the momentum vectors of the leading electron and proton.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return the opening angle between the leading muon and
+     * @return the opening angle between the leading electron and
      * proton.
      */
     template<class T>
     double opening_angle(const T & obj)
     {
-        size_t mi = selectors::leading_muon(obj);
+        size_t ei = selectors::leading_electron(obj);
         size_t pi = selectors::leading_proton(obj);
-        if(mi == kNoMatch || pi == kNoMatch)
-            return kNoMatchValue; // No leading muon or proton found.
+        if(ei == kNoMatch || pi == kNoMatch)
+            return kNoMatchValue; // No leading electron or proton found.
         else
         {
-            auto & m(obj.particles[mi]);
+            auto & m(obj.particles[ei]);
             auto & p(obj.particles[pi]);
             return std::acos(m.start_dir[0] * p.start_dir[0] + m.start_dir[1] * p.start_dir[1] + m.start_dir[2] * p.start_dir[2]);
         }
@@ -784,46 +784,46 @@ namespace vars
     REGISTER_VAR_SCOPE(RegistrationScope::Both, opening_angle, opening_angle);
     
     /**
-     * @brief Variable for the opening angle between leading muon and proton in degrees.
+     * @brief Variable for the opening angle between leading electron and proton in degrees.
      * @details Same as opening_angle but converted to degrees for easier interpretation.
-     * The leading muon and proton are defined as the particles with the
+     * The leading electron and proton are defined as the particles with the
      * highest kinetic energy. The opening angle is defined as the arccosine of
-     * the dot product of the momentum vectors of the leading muon and proton.
+     * the dot product of the momentum vectors of the leading electron and proton.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return the opening angle between the leading muon and proton in degrees.
+     * @return the opening angle between the leading electron and proton in degrees.
      */
     template<class T>
     double opening_angle_deg(const T & obj)
     {
         double angle_rad = opening_angle(obj);
         if(std::isnan(angle_rad))
-            return kNoMatchValue; // No leading muon or proton found.
+            return kNoMatchValue; // No leading electron or proton found.
         else
             return angle_rad * 180.0 / M_PI;
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, opening_angle_deg, opening_angle_deg);
 
     /**
-     * @brief Variable for the cosine of the opening angle between leading muon and proton.
-     * @details The leading muon and proton are defined as the particles with the
+     * @brief Variable for the cosine of the opening angle between leading electron and proton.
+     * @details The leading electron and proton are defined as the particles with the
      * highest kinetic energy. This variable returns the cosine of the opening angle,
-     * which is simply the dot product of the direction vectors of the leading muon
+     * which is simply the dot product of the direction vectors of the leading electron
      * and proton (assuming normalized direction vectors).
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return the cosine of the opening angle between the leading muon and proton.
+     * @return the cosine of the opening angle between the leading electron and proton.
      */
     template<class T>
     double opening_angle_cos(const T & obj)
     {
-        size_t mi = selectors::leading_muon(obj);
+        size_t ei = selectors::leading_electron(obj);
         size_t pi = selectors::leading_proton(obj);
-        if(mi == kNoMatch || pi == kNoMatch)
-            return kNoMatchValue; // No leading muon or proton found.
+        if(ei == kNoMatch || pi == kNoMatch)
+            return kNoMatchValue; // No leading electron or proton found.
         else
         {
-            auto & m(obj.particles[mi]);
+            auto & m(obj.particles[ei]);
             auto & p(obj.particles[pi]);
             return m.start_dir[0] * p.start_dir[0] +
                    m.start_dir[1] * p.start_dir[1] +
@@ -831,6 +831,22 @@ namespace vars
         }
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, opening_angle_cos, opening_angle_cos);
+
+    template<class T>
+    double photon_opening_angle(const T & obj)
+    {
+        size_t p1 = selectors::leading_photon(obj);
+        size_t p2 = selectors::secondary_photon(obj);
+        if(p1 == kNoMatch || p2 == kNoMatch)
+            return kNoMatchValue; // No leading photon or proton found.
+        else
+        {
+            auto & m(obj.particles[p1]);
+            auto & p(obj.particles[p2]);
+            return std::acos(m.start_dir[0] * p.start_dir[0] + m.start_dir[1] * p.start_dir[1] + m.start_dir[2] * p.start_dir[2]);
+        }
+    }
+    REGISTER_VAR_SCOPE(RegistrationScope::Both, photon_opening_angle, photon_opening_angle);
 
     /**
      * @brief Variable for the (primary) photon multiplicity of the
@@ -1031,76 +1047,97 @@ namespace vars
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, leading_muon_vertex_gap, leading_muon_vertex_gap);
 
-/**
-     * @brief Four-momentum transfer squared Q² in GeV².
-     * @details Q² = 2·Eν·(Eμ − pμ·cosθbeam) − mμ², where Eν is the visible
-     * energy, Eμ and pμ are the leading primary muon energy and momentum
-     * magnitude, and cosθbeam is computed from the momentum components.
-     * All quantities in GeV. Requires leading_primary_muon from stage 1.
+    /**
+     * @brief Variable for the four-momentum transfer squared Q^2.
+     * @details Q^2 is computed from the visible energy (used as a proxy for the
+     * neutrino energy) and the leading electron four-momentum using the formula
+     *   Q^2 = 2 * E_nu * (E_e - |p_e| cos theta) - m_e^2
+     * where theta is the angle between the electron momentum and the NuMI beam
+     * direction (fixed unit vector). Returns kNoMatchValue if no leading
+     * electron is found.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return Q² in GeV², or PLACEHOLDERVALUE if no primary muon is found.
+     * @return Q^2 in GeV^2.
      */
     template<class T>
     double Q2(const T & obj)
     {
-        size_t mi = selectors::leading_primary_muon(obj);
-        if(mi == kNoMatch) return PLACEHOLDERVALUE;
-        const auto & m(obj.particles[mi]);
-        double pmod = std::sqrt(pvars::px(m)*pvars::px(m) + pvars::py(m)*pvars::py(m) + pvars::pz(m)*pvars::pz(m));
-        double beam_costheta = pvars::pz(m) / pmod;
-        return 2*visible_energy(obj)*((pvars::energy(m)/1000.0) - pvars::p(m)*beam_costheta)
-               - std::pow(MUON_MASS/1000.0, 2);
+        double nu_energy = visible_energy(obj);
+        size_t i = selectors::leading_electron(obj);
+        if(i == kNoMatch) return kNoMatchValue;
+
+        double electron_energy = pvars::energy(obj.particles[i]);
+        double px = pvars::px(obj.particles[i]);
+        double py = pvars::py(obj.particles[i]);
+        double pz = pvars::pz(obj.particles[i]);
+        double pmag = std::sqrt(px*px + py*py + pz*pz);
+
+        // Fixed NuMI beam direction unit vector at ICARUS detector centre.
+        constexpr double bx = 0.39431672, by = 0.04210058, bz = 0.91800973;
+        double cos_theta = (px*bx + py*by + pz*bz) / pmag;
+
+        return 2.0*nu_energy*(electron_energy - pmag*cos_theta)
+               - ELECTRON_MASS*ELECTRON_MASS;
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, Q2, Q2);
 
     /**
-     * @brief Hadronic invariant mass W in GeV.
-     * @details W = sqrt(mN² + 2·mN·(Eν − Eμ) − Q²), where Eν is the visible
-     * energy and Eμ is the leading primary muon energy. Requires
-     * leading_primary_muon from stage 1.
+     * @brief Variable for the hadronic invariant mass W.
+     * @details W is calculated using the standard CC formula
+     *   W = sqrt(M_N^2 + 2*M_N*(E_nu - E_e) - Q^2)
+     * where M_N is the nuclear target mass (Argon-40, ~37.147 GeV/c^2),
+     * E_nu is approximated by the visible energy, E_e is the leading electron
+     * energy, and Q^2 is from @ref Q2. Returns kNoMatchValue if no
+     * leading electron is found or if the argument to sqrt is negative.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return W in GeV, or PLACEHOLDERVALUE if no primary muon is found.
+     * @return W in GeV/c^2.
      */
     template<class T>
     double W(const T & obj)
     {
-        size_t mi = selectors::leading_primary_muon(obj);
-        if(mi == kNoMatch) return PLACEHOLDERVALUE;
-        const auto & m(obj.particles[mi]);
-        double mN = NUCLEON_MASS / 1000.0;
-        return std::sqrt(mN*mN + 2*mN*(visible_energy(obj) - pvars::energy(m)/1000.0) - Q2(obj));
+        constexpr double MN = 37.147393; // Argon-40 nuclear mass (GeV/c^2)
+        size_t i = selectors::leading_electron(obj);
+        if(i == kNoMatch) return kNoMatchValue;
+
+        double nu_energy      = visible_energy(obj);
+        double electron_energy = pvars::energy(obj.particles[i]);
+        double Q              = Q2(obj);
+        double W2             = MN*MN + 2.0*MN*(nu_energy - electron_energy) - Q;
+        return (W2 >= 0.0) ? std::sqrt(W2) : kNoMatchValue;
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, W, W);
 
     /**
      * @brief Hadronic invariant mass W using calorimetric-substituted visible energy.
      * @details Same as W but uses visible_energy_calosub for Eν. Requires
-     * leading_primary_muon from stage 1.
+     * leading_primary_electron from stage 1.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return W in GeV, or PLACEHOLDERVALUE if no primary muon is found.
+     * @return W in GeV, or PLACEHOLDERVALUE if no primary electron is found.
      */
     template<class T>
     double W_calosub(const T & obj)
     {
-        size_t mi = selectors::leading_primary_muon(obj);
-        if(mi == kNoMatch) return PLACEHOLDERVALUE;
-        const auto & m(obj.particles[mi]);
+        size_t i = selectors::leading_primary_electron(obj);
+        if(i == kNoMatch) return PLACEHOLDERVALUE;
+        const auto & m(obj.particles[i]);
         double mN = NUCLEON_MASS / 1000.0;
         return std::sqrt(mN*mN + 2*mN*(visible_energy_calosub(obj) - pvars::energy(m)/1000.0) - Q2(obj));
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, W_calosub, W_calosub);
 
     /**
-     * @brief Hadronic invariant mass W in GeV.
-     * @details W = sqrt(mN² + 2·mN·(Eν − Eμ) − Q²), where Eν is the visible
-     * energy and Eμ is the leading primary muon energy. Requires
-     * leading_primary_muon from stage 1.
+     * @brief Variable for the four-momentum transfer squared Q^2.
+     * @details Q^2 is computed from the visible energy (used as a proxy for the
+     * neutrino energy) and the leading electron four-momentum using the formula
+     *   Q^2 = 2 * E_nu * (E_e - |p_e| cos theta) - m_e^2
+     * where theta is the angle between the electron momentum and the NuMI beam
+     * direction (fixed unit vector). Returns kNoMatchValue if no leading
+     * electron is found.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return W in GeV, or PLACEHOLDERVALUE if no primary muon is found.
+     * @return Q^2 in GeV^2.
      */
     template<class T>
     double momentum_transfer(const T & obj)
@@ -1112,11 +1149,11 @@ namespace vars
     /**
      * @brief Hadronic invariant mass W in GeV.
      * @details W = sqrt(mN² + 2·mN·(Eν − Eμ) − Q²), where Eν is the visible
-     * energy and Eμ is the leading primary muon energy. Requires
-     * leading_primary_muon from stage 1.
+     * energy and Eμ is the leading primary electron energy. Requires
+     * leading_primary_electron from stage 1.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to apply the variable on.
-     * @return W in GeV, or PLACEHOLDERVALUE if no primary muon is found.
+     * @return W in GeV, or PLACEHOLDERVALUE if no primary electron is found.
      */
     template<class T>
     double hadronic_invariant_mass(const T & obj)
@@ -1174,5 +1211,42 @@ namespace vars
         return g_issignal ? 1.0 : 0.0;
     }
     REGISTER_VAR_SCOPE(RegistrationScope::Both, cut_type, cut_type);
+
+    /*Topology*/
+    template<class T>
+    double reco_interaction_type(const T & obj)
+    {
+        int nEle(0);
+        int nMu(0);
+        int nPi(0);
+        int nProton(0);
+        for (size_t i = 0; i < obj.particles.size(); ++i)
+        {
+            if(pvars::pid(obj.particles[i]) == pvars::kElectron && pvars::primary_classification(obj.particles[i]))
+                nEle++;
+            else if(pvars::pid(obj.particles[i]) == pvars::kMuon && pvars::primary_classification(obj.particles[i]))
+                nMu++;
+            else if(pvars::pid(obj.particles[i]) == pvars::kPion && pvars::primary_classification(obj.particles[i]))
+                nPi++;
+            else if(pvars::pid(obj.particles[i]) == pvars::kProton && pvars::primary_classification(obj.particles[i]))
+                nProton++;
+        }
+
+        if(nEle > 0 && nMu == 0 && nPi == 0 && nProton == 1)
+            return 1; // CC QE-like
+        else if(nEle > 0 && nMu == 0 && nPi == 0 && nProton == 2)
+            return 2; // CC MEC-like
+        else if(nEle > 0 && nMu == 0 && nPi == 0 && nProton > 2)
+            return 3; // CC DIS-like
+        else if(nEle > 0 && nMu == 0 && nPi == 1)
+            return 4; // RES-like
+        else if(nEle > 0 && nMu == 0 && nPi > 1)
+            return 5; // DIS-like, SIS-like
+        else if(nEle > 0 && nMu == 0)
+            return 6; // Other nuE
+        else
+            return 0; // Other interaction type
+    }
+    REGISTER_VAR_SCOPE(RegistrationScope::Reco, reco_interaction_type, reco_interaction_type);
 }
 #endif // VARIABLES_H

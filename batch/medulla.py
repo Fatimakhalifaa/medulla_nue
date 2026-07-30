@@ -5,7 +5,7 @@ from pathlib import Path
 from utilities import create_new_project, check_project_status, launch_jobsub, check_git_branch
 from typing import Optional
 
-MEDULLA_REPO_URL = "https://github.com/Fatimakhalifaa/medulla_numu.git"
+MEDULLA_REPO_URL = "https://github.com/Fatimakhalifaa/medulla_nue.git"
 
 
 def main(

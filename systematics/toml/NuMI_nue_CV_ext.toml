@@ -1,18 +1,152 @@
+
 [input]
-path = 'output.root'
-#weights = '/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*flat_merged_geant4.root'
-#weights = 'data/*flat*.root'
-weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p02_2/combined_files/*.flat.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/NueCC_inclusive_all.root'
+weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p02_redo/*.flat.root'
 
 use_additional_hash = true
 
 [output]
-path = 'output_sys.root'
+path = 'nue_mc_signal_ext_sys.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
 name = 'reco_leading_electron_ke'
 bins = [15, 0, 3000]
+
+[variations]
+keys = [ 'nominal_nue','var00', 'var01p','var01m', 'var02m','var02p', 'var03m', 'var03p','var04m','var04p','var05','var06','var07','var08','var09']
+origin = 'events/'
+tree = 'selected'
+result_destination = 'detsys_results/'
+variable = 'reco_leading_electron_ke'
+bins = [15, 0, 3000]
+nuniverses = 1000
+variable_length = false
+
+[[tree]]
+origin = 'events/cvext/selected'
+destination = 'events/cvext/'
+name = 'selected'
+action = 'add_weights'
+#table_types = ['variation']
+table_types = ['multisim', 'multisigma', 'variation']
+
+[[tree]]
+origin = 'events/cvext/signal'
+destination = 'events/cvext/'
+name = 'signal'
+action = 'add_weights'
+#table_types = ['multisim', 'multisigma']
+table_types = ['multisim', 'multisigma', 'variation']
+
+[[tree]]
+origin = 'events/cvext/nc_sideband'
+destination = 'events/cvext/'
+name = 'nc_sideband'
+action = 'add_weights'
+#table_types = ['variation']
+table_types = ['multisim', 'multisigma', 'variation']
+
+[[tree]]
+origin = 'events/data/selected'
+destination = 'events/data/'
+name = 'selected'
+action = 'copy'
+[[tree]]
+origin = 'events/offbeam/selected'
+destination = 'events/offbeam/'
+name = 'selected'
+action = 'copy'
+
+[[sys]]
+name = 'var00'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var00', 'var00', 'var00', 'nominal_nue', 'var00', 'var00', 'var00']
+
+[[sys]]
+name = 'var01'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var01m', 'var01m', 'var01m', 'nominal_nue', 'var01p', 'var01p', 'var01p']
+
+[[sys]]
+name = 'var02'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var02m', 'var02m', 'var02m', 'nominal_nue', 'var02p', 'var02p', 'var02p']
+
+[[sys]]
+name = 'var03'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [3, 2, 1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var03m', 'var03m', 'var03m', 'nominal_nue', 'var03p', 'var03p', 'var03p']
+
+[[sys]]
+name = 'var04'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var04m', 'var04m', 'var04m', 'nominal_nue', 'var04p', 'var04p', 'var04p']
+
+[[sys]]
+name = 'var05'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var05', 'var05', 'var05', 'nominal_nue', 'var05', 'var05', 'var05']
+
+[[sys]]
+name = 'var06'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var06', 'var06', 'var06', 'nominal_nue', 'var06', 'var06', 'var06']
+
+[[sys]]
+name = 'var07'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var07', 'var07', 'var07', 'nominal_nue', 'var07', 'var07', 'var07']
+
+[[sys]]
+name = 'var08'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var08', 'var08', 'var08', 'nominal_nue', 'var08', 'var08', 'var08']
+
+[[sys]]
+name = 'var09'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal_nue'
+points = ['var09', 'var09', 'var09', 'nominal_nue', 'var09', 'var09', 'var09']
 
 [[sys]]
 name = 'GENIEReWeight_SBN_v1_multisigma_ZExpA1CCQE'
@@ -692,68 +826,3 @@ index = 113
 name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_NC_3Pi'
 type = 'multisim'
 index = 114
-
-[[sys]]
-name = 'expskin_Flux'
-type = 'multisim'
-index = 115
-
-[[sys]]
-name = 'horncurrent_Flux'
-type = 'multisim'
-index = 116
-
-[[sys]]
-name = 'kminus_Flux'
-type = 'multisim'
-index = 117
-
-[[sys]]
-name = 'kplus_Flux'
-type = 'multisim'
-index = 118
-
-[[sys]]
-name = 'kzero_Flux'
-type = 'multisim'
-index = 119
-
-[[sys]]
-name = 'nucleoninexsec_Flux'
-type = 'multisim'
-index = 120
-
-[[sys]]
-name = 'nucleonqexsec_Flux'
-type = 'multisim'
-index = 121
-
-[[sys]]
-name = 'nucleontotxsec_Flux'
-type = 'multisim'
-index = 122
-
-[[sys]]
-name = 'piminus_Flux'
-type = 'multisim'
-index = 123
-
-[[sys]]
-name = 'pioninexsec_Flux'
-type = 'multisim'
-index = 124
-
-[[sys]]
-name = 'pionqexsec_Flux'
-type = 'multisim'
-index = 125
-
-[[sys]]
-name = 'piontotxsec_Flux'
-type = 'multisim'
-index = 126
-
-[[sys]]
-name = 'piplus_Flux'
-type = 'multisim'
-index = 127

@@ -1,18 +1,144 @@
+
 [input]
-path = 'output.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/NueCC_inclusive_all.root'
+weights = '/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*.root'
 #weights = '/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*flat_merged_geant4.root'
-#weights = 'data/*flat*.root'
-weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p02_2/combined_files/*.flat.root'
 
 use_additional_hash = true
 
 [output]
-path = 'output_sys.root'
+path = 'nue_mc_signal_sys_Geant4.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
 name = 'reco_leading_electron_ke'
 bins = [15, 0, 3000]
+
+[variations]
+keys = [ 'nominal', 'var01p','var01m', 'var02m','var02p', 'var03m', 'var03p','var04m','var04p','var05','var06','var07','var08','var09']
+origin = 'events/'
+tree = 'selected'
+result_destination = 'detsys_results/'
+variable = 'reco_leading_electron_ke'
+bins = [15, 0, 3000]
+nuniverses = 1000
+variable_length = false
+
+[[tree]]
+origin = 'events/nominal/selected'
+destination = 'events/full/'
+name = 'selected'
+action = 'add_weights'
+#table_types = ['variation']
+table_types = ['multisigma','multisim','variation']
+
+[[tree]]
+origin = 'events/nominal/signal'
+destination = 'events/full/'
+name = 'signal'
+action = 'add_weights'
+#table_types = ['multisim', 'multisigma']
+table_types = ['multisigma','multisim','variation']
+
+
+#[[sys]]
+#name = 'var00'
+#type = 'variation'
+#index = -1
+#nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+#scale = [-3, -2, -1, 1, 1, 2, 3]
+#ordinate = 'nominal'
+#points = ['var00', 'var00', 'var00', 'nominal', 'var00', 'var00', 'var00']
+
+#[[sys]]
+#name = 'var00'
+#type = 'variation'
+#index = -1
+#nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+#scale = [-3, -2, -1, 1, 1, 2, 3]
+#ordinate = 'nominal'
+#points = ['var00', 'var00', 'var00', 'nominal', 'var00', 'var00', 'var00']
+
+[[sys]]
+name = 'var01'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var01m', 'var01m', 'var01m', 'nominal', 'var01p', 'var01p', 'var01p']
+
+[[sys]]
+name = 'var02'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var02m', 'var02m', 'var02m', 'nominal', 'var02p', 'var02p', 'var02p']
+
+[[sys]]
+name = 'var03'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [3, 2, 1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var03m', 'var03m', 'var03m', 'nominal', 'var03p', 'var03p', 'var03p']
+
+[[sys]]
+name = 'var04'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var04m', 'var04m', 'var04m', 'nominal', 'var04p', 'var04p', 'var04p']
+
+[[sys]]
+name = 'var05'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var05', 'var05', 'var05', 'nominal', 'var05', 'var05', 'var05']
+
+[[sys]]
+name = 'var06'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var06', 'var06', 'var06', 'nominal', 'var06', 'var06', 'var06']
+
+[[sys]]
+name = 'var07'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var07', 'var07', 'var07', 'nominal', 'var07', 'var07', 'var07']
+
+[[sys]]
+name = 'var08'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var08', 'var08', 'var08', 'nominal', 'var08', 'var08', 'var08']
+
+[[sys]]
+name = 'var09'
+type = 'variation'
+index = -1
+nsigma = [-3, -2, -1, 0, 1 ,2, 3]
+scale = [-3, -2, -1, 1, 1, 2, 3]
+ordinate = 'nominal'
+points = ['var09', 'var09', 'var09', 'nominal', 'var09', 'var09', 'var09']
 
 [[sys]]
 name = 'GENIEReWeight_SBN_v1_multisigma_ZExpA1CCQE'
@@ -379,381 +505,31 @@ index = 51
 nsigma = [-1,1,-2,2,-3,3]
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_ZExpAVariationResponse'
-type = 'multisim'
+name = "reinteractions_kminus_Geant4"
+type = "multisim"
 index = 52
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_RPA_CCQE'
-type = 'multisim'
+name = "reinteractions_kplus_Geant4"
+type = "multisim"
 index = 53
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_CoulombCCQE'
-type = 'multisim'
+name = "reinteractions_neutron_Geant4"
+type = "multisim"
 index = 54
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NormCCMEC'
-type = 'multisim'
+name = "reinteractions_piminus_Geant4"
+type = "multisim"
 index = 55
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NormNCMEC'
-type = 'multisim'
+name = "reinteractions_piplus_Geant4"
+type = "multisim"
 index = 56
 
 [[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NCELVariationResponse'
-type = 'multisim'
+name = "reinteractions_proton_Geant4"
+type = "multisim"
 index = 57
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_CCRESVariationResponse'
-type = 'multisim'
-index = 58
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NCRESVariationResponse'
-type = 'multisim'
-index = 59
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvpCC1pi'
-type = 'multisim'
-index = 60
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvpCC2pi'
-type = 'multisim'
-index = 61
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvpNC1pi'
-type = 'multisim'
-index = 62
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvpNC2pi'
-type = 'multisim'
-index = 63
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvnCC1pi'
-type = 'multisim'
-index = 64
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvnCC2pi'
-type = 'multisim'
-index = 65
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvnNC1pi'
-type = 'multisim'
-index = 66
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvnNC2pi'
-type = 'multisim'
-index = 67
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarpCC1pi'
-type = 'multisim'
-index = 68
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarpCC2pi'
-type = 'multisim'
-index = 69
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarpNC1pi'
-type = 'multisim'
-index = 70
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarpNC2pi'
-type = 'multisim'
-index = 71
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarnCC1pi'
-type = 'multisim'
-index = 72
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarnCC2pi'
-type = 'multisim'
-index = 73
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarnNC1pi'
-type = 'multisim'
-index = 74
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_NonRESBGvbarnNC2pi'
-type = 'multisim'
-index = 75
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_RDecBR1gamma'
-type = 'multisim'
-index = 76
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_RDecBR1eta'
-type = 'multisim'
-index = 77
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_COHVariationResponse'
-type = 'multisim'
-index = 78
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_DISBYVariationResponse'
-type = 'multisim'
-index = 79
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_FSI_pi_VariationResponse'
-type = 'multisim'
-index = 80
-
-[[sys]]
-name = 'GENIEReWeight_SBN_v1_multisim_FSI_N_VariationResponse'
-type = 'multisim'
-index = 81
-
-[[sys]]
-name = 'MINERvAE2p2h_SBN_v1_E2p2h_A_nu'
-type = 'multisim'
-index = 82
-
-[[sys]]
-name = 'MINERvAE2p2h_SBN_v1_E2p2h_B_nu'
-type = 'multisim'
-index = 83
-
-[[sys]]
-name = 'MINERvAE2p2h_SBN_v1_E2p2h_A_nubar'
-type = 'multisim'
-index = 84
-
-[[sys]]
-name = 'MINERvAE2p2h_SBN_v1_E2p2h_B_nubar'
-type = 'multisim'
-index = 85
-
-[[sys]]
-name = 'MINERvAg0q3Weighting_SBN_v1_Mnv202hGaussEnhancement'
-type = 'multisim'
-index = 86
-
-[[sys]]
-name = 'MiscInteractionSysts_SBN_v1_C12ToAr40_2p2hScaling_nu'
-type = 'multisim'
-index = 87
-
-[[sys]]
-name = 'MiscInteractionSysts_SBN_v1_C12ToAr40_2p2hScaling_nubar'
-type = 'multisim'
-index = 88
-
-[[sys]]
-name = 'MiscInteractionSysts_SBN_v1_nuenuebar_xsec_ratio'
-type = 'multisim'
-index = 89
-
-[[sys]]
-name = 'MiscInteractionSysts_SBN_v1_nuenumu_xsec_ratio'
-type = 'multisim'
-index = 90
-
-[[sys]]
-name = 'MiscInteractionSysts_SBN_v1_SPPLowQ2Suppression'
-type = 'multisim'
-index = 91
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_n_CC_2Pi'
-type = 'multisim'
-index = 92
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_n_CC_3Pi'
-type = 'multisim'
-index = 93
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_p_CC_2Pi'
-type = 'multisim'
-index = 94
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_p_CC_3Pi'
-type = 'multisim'
-index = 95
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_np_CC_1Pi'
-type = 'multisim'
-index = 96
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_n_NC_1Pi'
-type = 'multisim'
-index = 97
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_n_NC_2Pi'
-type = 'multisim'
-index = 98
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_n_NC_3Pi'
-type = 'multisim'
-index = 99
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_p_NC_1Pi'
-type = 'multisim'
-index = 100
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_p_NC_2Pi'
-type = 'multisim'
-index = 101
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nu_p_NC_3Pi'
-type = 'multisim'
-index = 102
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_CC_1Pi'
-type = 'multisim'
-index = 103
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_CC_2Pi'
-type = 'multisim'
-index = 104
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_CC_3Pi'
-type = 'multisim'
-index = 105
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_CC_1Pi'
-type = 'multisim'
-index = 106
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_CC_2Pi'
-type = 'multisim'
-index = 107
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_CC_3Pi'
-type = 'multisim'
-index = 108
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_NC_1Pi'
-type = 'multisim'
-index = 109
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_NC_2Pi'
-type = 'multisim'
-index = 110
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_n_NC_3Pi'
-type = 'multisim'
-index = 111
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_NC_1Pi'
-type = 'multisim'
-index = 112
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_NC_2Pi'
-type = 'multisim'
-index = 113
-
-[[sys]]
-name = 'NOvAStyleNonResPionNorm_SBN_v1_NR_nubar_p_NC_3Pi'
-type = 'multisim'
-index = 114
-
-[[sys]]
-name = 'expskin_Flux'
-type = 'multisim'
-index = 115
-
-[[sys]]
-name = 'horncurrent_Flux'
-type = 'multisim'
-index = 116
-
-[[sys]]
-name = 'kminus_Flux'
-type = 'multisim'
-index = 117
-
-[[sys]]
-name = 'kplus_Flux'
-type = 'multisim'
-index = 118
-
-[[sys]]
-name = 'kzero_Flux'
-type = 'multisim'
-index = 119
-
-[[sys]]
-name = 'nucleoninexsec_Flux'
-type = 'multisim'
-index = 120
-
-[[sys]]
-name = 'nucleonqexsec_Flux'
-type = 'multisim'
-index = 121
-
-[[sys]]
-name = 'nucleontotxsec_Flux'
-type = 'multisim'
-index = 122
-
-[[sys]]
-name = 'piminus_Flux'
-type = 'multisim'
-index = 123
-
-[[sys]]
-name = 'pioninexsec_Flux'
-type = 'multisim'
-index = 124
-
-[[sys]]
-name = 'pionqexsec_Flux'
-type = 'multisim'
-index = 125
-
-[[sys]]
-name = 'piontotxsec_Flux'
-type = 'multisim'
-index = 126
-
-[[sys]]
-name = 'piplus_Flux'
-type = 'multisim'
-index = 127

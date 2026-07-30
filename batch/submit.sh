@@ -76,8 +76,8 @@ ups active
 
 # Build medulla
 #git clone https://github.com/justinjmueller/medulla.git
-git clone https://github.com/Fatimakhalifaa/medulla_numu.git
-cd medulla_numu
+git clone https://github.com/Fatimakhalifaa/medulla_nue.git
+cd medulla_nue
 git checkout "$BRANCH"
 mkdir build && cd build
 export CC=$(which gcc)
