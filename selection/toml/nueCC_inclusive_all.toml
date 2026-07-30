@@ -67,6 +67,110 @@ ismc = false
 disable = false # Optional: default = false
 
 # =============================================================================
+# Samples — detector systematics CV references (nue_Null_CV.toml)
+# =============================================================================
+
+[[sample]]
+name = "nominal"
+path = "/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*.root"
+ismc = true
+disable = false
+
+[[sample]]
+name = "nominal_nue"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/CV_sample/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Null variation (nue_Null_CV.toml)
+name = "var00"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Null_sample/*.root"
+ismc = true
+disable = false
+
+# =============================================================================
+# Samples — detector systematics variations
+# =============================================================================
+
+[[sample]] # High gain (nue_gain.toml)
+name = "var01p"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/High_Gain/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Low gain (nue_gain.toml)
+name = "var01m"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Low_Gain/*.root"
+ismc = true
+disable = false
+
+[[sample]] # High coherent noise (nue_coh.toml)
+name = "var02p"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/High_Coh/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Low coherent noise (nue_coh.toml)
+name = "var02m"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Low_Coh/*.root"
+ismc = true
+disable = false
+
+[[sample]] # High interaction rate (nue_int.toml)
+name = "var03p"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/High_Int/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Low interaction rate (nue_int.toml)
+name = "var03m"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Low_Int/*.root"
+ismc = true
+disable = false
+
+[[sample]] # High electron lifetime (nue_liftime.toml)
+name = "var04p"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/High_Lifetime/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Low electron lifetime (nue_liftime.toml)
+name = "var04m"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Low_Lifetime/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Scintillation variation (nue_YZ_scint.toml)
+name = "var05"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Scint_var/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Wire gap (nue_wire_recomb.toml)
+name = "var06"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/WireGap/*.root"
+ismc = true
+disable = false
+
+[[sample]] # YZ uniformity (nue_YZ_scint.toml)
+name = "var07"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/YZ_unif/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Recombination model (nue_wire_recomb.toml)
+name = "var08"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Recomb_Model/*.root"
+ismc = true
+disable = false
+
+[[sample]] # Cathode bend (nue_cath_bend.toml)
+name = "var09"
+path = "/pnfs/icarus/persistent/users/dcarber/spine/NuMI_Nue_det_sys_flat_cafs/Cath_bend/*.root"
+ismc = true
+disable = false
+
+# =============================================================================
 # Trees
 # =============================================================================
 
