@@ -10,6 +10,7 @@ source /cvmfs/icarus.opensciencegrid.org/products/icarus/setup_icarus.sh
 setup sbnana v10_01_02_01 -q e26:prof
 
 setup cmake v3_27_4
+cmake .. && make -j4
 
 # ICARUS
 htgettoken -a htvaultprod.fnal.gov  -i icarus
@@ -18,7 +19,7 @@ htgettoken -a htvaultprod.fnal.gov  -i icarus
 
 # Create Project
 rm -fr /pnfs/icarus/scratch/users/faabdalr/bNew_med/test
-python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC_inclusive.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sys -b 10 --create-project
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC_inclusive.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sys -b 1 --create-project
 
 # Submit a test
 python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/test -e icarus --test-job --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 2
@@ -69,4 +70,55 @@ cmake .. && make -j4
 
 # Running the Selection
 ./selection/medulla /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC
+
+
+# Systematics
+./build/systematics/run_systematics systematics/toml/NuMI_nue_CV_ext.toml
+./build/systematics/run_systematics systematics/toml/NuMI_nue_Geant4.toml
+
+rm -fr /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_null
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_null_cv.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_null2 -b 10 --create-project
+
+# Submit a test
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_null -e icarus --test-job --branch feature/nue_analysis --memory 12000 --disk 30 
+
+# Submit all jobs
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_null2 -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30 
+
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_gain.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_gain -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_gain -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_coh.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_coh -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_coh -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_cath_bend.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_cath -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_cath -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_int.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_int -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_int -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_liftime.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_liftime -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_liftime -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_wire_recomb.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_wire -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_wire -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nue_YZ_scint.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_scint -b 10 --create-project
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_scint -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
