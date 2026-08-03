@@ -949,22 +949,6 @@ branch = [
 
 ]
 
-[[tree]]
-name = "eventLevel"
-sim_only = false
-#issignal = false
-#isdata = false
-mode = "event"
-cut = []
-branch = [
-    { name = "ntrue",         type = "event"    },
-    { name = "nreco",         type = "event"    },
-    { name = "nnu",           type = "event"    },
-    { name = "nintime",       type = "event", parameters = [ "@flash_low_t", "@flash_high_t" ] },
-    { name = "nnu_mu",        type = "event"    },
-    { name = "nnu_e",         type = "event"    },
-]
-
 [[category]] # 0 : Signal, fiducial electron neutrino CC events, w/ electron
 cuts = [
     { name = "neutrino"        },

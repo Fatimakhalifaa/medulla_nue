@@ -1,13 +1,13 @@
 
 [input]
-path = '/exp/icarus/data/users/fatima/Medulla_output/NueCC_inclusive_all.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/Systematics/Nue/NueCC_inclusive_all2.root'
 weights = '/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*.root'
 #weights = '/pnfs/icarus/persistent/users/spine/NuMI/Nu_det_sys/CV/*flat_merged_geant4.root'
 
 use_additional_hash = true
 
 [output]
-path = 'nue_mc_signal_sys_Geant4.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/Systematics/nue_mc_signal_sys_Geant4.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
@@ -39,7 +39,6 @@ name = 'signal'
 action = 'add_weights'
 #table_types = ['multisim', 'multisigma']
 table_types = ['multisigma','multisim','variation']
-
 
 #[[sys]]
 #name = 'var00'

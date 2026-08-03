@@ -6,7 +6,7 @@ weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p
 use_additional_hash = true
 
 [output]
-path = 'nue_mc_signal_ext_sys.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/Systematics/nue_mc_signal_ext_sys2.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
@@ -28,7 +28,6 @@ origin = 'events/cvext/selected'
 destination = 'events/cvext/'
 name = 'selected'
 action = 'add_weights'
-#table_types = ['variation']
 table_types = ['multisim', 'multisigma', 'variation']
 
 [[tree]]
@@ -36,15 +35,6 @@ origin = 'events/cvext/signal'
 destination = 'events/cvext/'
 name = 'signal'
 action = 'add_weights'
-#table_types = ['multisim', 'multisigma']
-table_types = ['multisim', 'multisigma', 'variation']
-
-[[tree]]
-origin = 'events/cvext/nc_sideband'
-destination = 'events/cvext/'
-name = 'nc_sideband'
-action = 'add_weights'
-#table_types = ['variation']
 table_types = ['multisim', 'multisigma', 'variation']
 
 [[tree]]
@@ -52,10 +42,27 @@ origin = 'events/data/selected'
 destination = 'events/data/'
 name = 'selected'
 action = 'copy'
+
 [[tree]]
 origin = 'events/offbeam/selected'
 destination = 'events/offbeam/'
 name = 'selected'
+action = 'copy'
+
+[[tree]]
+origin = 'events/cvext/nc_sideband'
+destination = 'events/cvext/'
+name = 'nc_sideband'
+action = 'copy'
+[[tree]]
+origin = 'events/data/nc_sideband'
+destination = 'events/data/'
+name = 'nc_sideband'
+action = 'copy'
+[[tree]]
+origin = 'events/offbeam/nc_sideband'
+destination = 'events/offbeam/'
+name = 'nc_sideband'
 action = 'copy'
 
 [[sys]]
