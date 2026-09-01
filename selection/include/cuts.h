@@ -1180,30 +1180,36 @@ namespace cuts
     /**
      * @brief Apply a cut to remove events with more than one electromagnetic shower.
      * @details This function iterates through all particles in the interaction and
-     * counts those with a semantic type of 0 (shower). It returns true if the
-     * interaction has one or zero showers, and false if it has more than one.
+     * counts those identified as photons or electrons (PID <= 1) with a kinetic
+     * energy above a given threshold. It returns true if the interaction has
+     * one or zero such showers, and false if it has more than one.
      * @tparam T the type of interaction (true or reco).
      * @param obj the interaction to select on.
+     * @param params the parameters for the cut. params[0] sets the kinetic
+     * energy threshold for a shower to be counted. Defaults to 25 MeV.
      * @return true if the interaction has <= 1 electromagnetic shower.
      */
     template<class T>
-    bool single_shower(const T & obj)
+    bool single_shower(const T & obj, std::vector<double> params={25.0,})
     {
         size_t shower_count = 0;
         for(const auto & p : obj.particles)
         {
-            // A semantic type of 0 corresponds to a shower
-            if(pvars::semantic_type(p) == 0)
+            // Check if the particle is an EM shower (photon or electron) 
+            // and is above the kinetic energy threshold
+            if(pvars::pid(p) <= 1 && pvars::ke(p) >= params[0])
             {
                 ++shower_count;
             }
             
-            // Short-circuit the loop if we exceed 1 shower
+            // Short-circuit: if we find more than 1, immediately reject the event
             if(shower_count > 1)
             {
                 return false;
             }
         }
+        
+        // If we finish the loop, the event has 0 or 1 EM showers
         return true;
     }
     REGISTER_CUT_SCOPE(RegistrationScope::Both, single_shower, single_shower);
