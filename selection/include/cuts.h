@@ -1177,5 +1177,36 @@ namespace cuts
     }
     REGISTER_CUT_SCOPE(RegistrationScope::Both, vertex_z_veto_cut, vertex_z_veto_cut);
 
+    /**
+     * @brief Apply a cut to remove events with more than one electromagnetic shower.
+     * @details This function iterates through all particles in the interaction and
+     * counts those with a semantic type of 0 (shower). It returns true if the
+     * interaction has one or zero showers, and false if it has more than one.
+     * @tparam T the type of interaction (true or reco).
+     * @param obj the interaction to select on.
+     * @return true if the interaction has <= 1 electromagnetic shower.
+     */
+    template<class T>
+    bool single_shower(const T & obj)
+    {
+        size_t shower_count = 0;
+        for(const auto & p : obj.particles)
+        {
+            // A semantic type of 0 corresponds to a shower
+            if(pvars::semantic_type(p) == 0)
+            {
+                ++shower_count;
+            }
+            
+            // Short-circuit the loop if we exceed 1 shower
+            if(shower_count > 1)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    REGISTER_CUT_SCOPE(RegistrationScope::Both, single_shower, single_shower);
+
 }
 #endif
