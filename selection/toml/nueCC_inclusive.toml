@@ -80,6 +80,7 @@ add_exposure = true
 mode = "reco"
 cut = [
     { name = "fiducial_cut",              type = "reco"   },
+    { name = "track_containment_cut",     type = "reco"   },
     { name = "flash_cut",                 type = "reco", parameters = [ "@flash_low_t", "@flash_high_t" ] },
     { name = "trigger_emulation_cut",     type = "event", decrements_exposure = false },
     { name = "data_quality_cut",          type = "event", decrements_exposure = true  },
@@ -96,6 +97,7 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
+    {name = "single_shower",              type = "both"    },
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -396,6 +398,7 @@ cut = [
     { name = "flash_cut",                 type = "reco", parameters = [ "@flash_low_t", "@flash_high_t" ] },
     { name = "vertex_distance_cut",       type = "reco", parameters = [ "@vertex_threshold" ] },
     { name = "has_particle_multiplicity", type = "reco", parameters = [1, 1] },
+    { name = "single_shower",             type = "both" },
     { name = "no_photons",                type = "reco", parameters = [ "@photon_threshold"   ] },
     { name = "no_muons",                  type = "reco", parameters = [ "@muon_threshold" ] },
     { name = "electron_softmax_cut",      type = "reco", parameters = [ "@electron_softmax", "@greater_than" ] },
@@ -417,6 +420,7 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
+    {name = "single_shower",              type = "both"    },
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -683,6 +687,7 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
+    {name = "single_shower",              type = "both"    },
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -957,6 +962,7 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
+    {name = "single_shower",              type = "both"    },
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
