@@ -387,7 +387,7 @@ branch = [
 name = "selected"
 sim_only = false
 #isdata = false
-add_systematics = true
+add_systematics = false
 add_exposure = true
 mode = "reco"
 cut = [
@@ -931,7 +931,7 @@ branch = [
  sim_only = false
  #issignal = true
  #isdata = false
- add_systematics = true
+ add_systematics = false
  mode = "reco"
  cut = [
      { name = "no_cut",                     type = "reco" },

@@ -19,13 +19,13 @@ htgettoken -a htvaultprod.fnal.gov  -i icarus
 
 # Create Project
 rm -fr /pnfs/icarus/scratch/users/faabdalr/bNew_med/test
-python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC_inclusive.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sys -b 1 --create-project
+python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC_inclusive.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower -b 1 --create-project
 
 # Submit a test
 python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/test -e icarus --test-job --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 2
 
 # Submit all jobs
-python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sys -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 10
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 10
 
 # Verify the test output 
 ls -lh /pnfs/icarus/scratch/users/faabdalr/nueCC_inclusive_all_ntest/output/
