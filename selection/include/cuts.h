@@ -20,6 +20,7 @@
 #include "include/bivariables.h"
 #include "include/biselectors.h"
 
+
 /**
  * @namespace cuts
  * @brief Namespace for organizing generic cuts which act on interactions.
@@ -1193,7 +1194,7 @@ namespace cuts
         for(const auto & p : obj.particles)
         {
             // Note the `!` before pvars::primary_classification
-            if(pvars::pid(p) <= 1 && pvars::primary_classification(p) && pvars::ke(p) >= params[0])
+            if(pvars::pid(p) <= 1 && !pvars::primary_classification(p) && pvars::ke(p) >= params[0])
                 ++count;
                 
             if(count > 1) 
@@ -1202,6 +1203,40 @@ namespace cuts
         return true;
     }
     REGISTER_CUT_SCOPE(RegistrationScope::Both, single_shower, single_shower);
+
+    /**
+     * @brief Cut to remove events with more than a maximum number of non-primary EM showers.
+     * @tparam T the type of interaction (true or reco).
+     * @param obj the interaction to apply the cut on.
+     * @param params params[0] sets the max allowed non-primary showers (defaults to 1.0).
+     *               params[1] sets the kinetic energy threshold in MeV (defaults to 25.0).
+     * @return true if the event has <= max allowed non-primary showers.
+     */
+    template<class T>
+    bool single_shower_cut(const T & obj, std::vector<double> params={1.0, 25.0})
+    {
+        // Extract parameters safely with fallbacks
+        double max_allowed  = (params.size() >= 1) ? params[0] : 1.0;
+        double ke_threshold = (params.size() >= 2) ? params[1] : 25.0;
+
+        size_t count = 0;
+        
+        // Loop through all particles in the interaction using your framework's structural pattern
+        for(const auto & p : obj.particles) 
+        {
+            // 1. Check if the particle is an electron or photon (PID <= 1)
+            // 2. Check if it is a secondary/non-primary particle (!primary)
+            // 3. Check if its kinetic energy is above the threshold
+            if(pvars::pid(p) <= 1 && !pvars::primary_classification(p) && pvars::ke(p) >= ke_threshold) 
+            {
+                ++count;
+            }
+        }
+
+        // Return true if the event contains an acceptable number of showers
+        return count <= max_allowed;
+    }
+    REGISTER_CUT_SCOPE(RegistrationScope::Both, single_shower_cut, single_shower_cut);
 
 }
 #endif
