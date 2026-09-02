@@ -97,7 +97,8 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
-    {name = "single_shower",              type = "both"    },
+    { name = "single_shower",             type = "both"    },
+    { name = "nonprimary_shower_multiplicity", type = "both"},
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -420,7 +421,8 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
-    {name = "single_shower",              type = "both"    },
+    { name = "single_shower",             type = "both"    },
+    { name = "nonprimary_shower_multiplicity", type = "both"},
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -687,7 +689,8 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
-    {name = "single_shower",              type = "both"    },
+    { name = "single_shower",             type = "both"    },
+    { name = "nonprimary_shower_multiplicity", type = "both"},
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
@@ -962,7 +965,8 @@ branch = [
     { name = "containment_cut",           type = "both"    },
     { name = "track_containment_cut",     type = "both"    },
     { name = "nonmuon_containment_cut",   type = "both"    },
-    {name = "single_shower",              type = "both"    },
+    { name = "single_shower",             type = "both"    },
+    { name = "nonprimary_shower_multiplicity", type = "both"},
 
     # cuts as branch variables
     { name = "flash_cut",                 type = "both", parameters = [ "@flash_low_t", "@flash_high_t" ] },
