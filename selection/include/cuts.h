@@ -1193,7 +1193,7 @@ namespace cuts
         for(const auto & p : obj.particles)
         {
             // Note the `!` before pvars::primary_classification
-            if(pvars::pid(p) <= 1 && !pvars::primary_classification(p) && pvars::ke(p) >= params[0])
+            if(pvars::pid(p) <= 1 && pvars::primary_classification(p) && pvars::ke(p) >= params[0])
                 ++count;
                 
             if(count > 1) 
