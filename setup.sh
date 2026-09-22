@@ -22,10 +22,10 @@ rm -fr /pnfs/icarus/scratch/users/faabdalr/bNew_med/test
 python3 batch/medulla.py -t /exp/icarus/data/users/fatima/medulla_nue/selection/toml/nueCC_inclusive.toml -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower_test -b 10 --create-project
 
 # Submit a test
-python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower_test -e icarus --test-job --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 2
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower_test2 -e icarus --test-job --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 2
 
 # Submit all jobs
-python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_shower -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 10
+python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/nue/nue_shower2 -e icarus --launch-jobs --branch feature/nue_analysis --memory 12000 --disk 30 --lifetime 10
 
 # Verify the test output 
 ls -lh /pnfs/icarus/scratch/users/faabdalr/nueCC_inclusive_all_ntest/output/
@@ -112,7 +112,7 @@ python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sci
 
 
 
-
+Use job id 30344276.0@jobsub05.fnal.gov
 
 
 
