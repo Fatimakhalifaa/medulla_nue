@@ -473,6 +473,7 @@ branch = [
     { name = "neutrino_energy",           type = "mctruth" },  
     { name = "visible_energy",            type = "both"    },
     { name = "hadronic_visible_energy",   type = "both"    },
+    { name = "leptonic_visible_energy",   type = "both"    },
     { name = "visible_energy_calosub",    type = "both"    },
     { name = "reco_interaction_type",     type = "reco"    },
 
@@ -741,6 +742,7 @@ branch = [
     { name = "neutrino_energy",           type = "mctruth" },  
     { name = "visible_energy",            type = "both"    },
     { name = "hadronic_visible_energy",   type = "both"    },
+    { name = "leptonic_visible_energy",   type = "both"    },
     { name = "visible_energy_calosub",    type = "both"    },
     { name = "reco_interaction_type",     type = "reco"    },
 
@@ -1017,6 +1019,7 @@ branch = [
     { name = "neutrino_energy",           type = "mctruth" },  
     { name = "visible_energy",            type = "both"    },
     { name = "hadronic_visible_energy",   type = "both"    },
+    { name = "leptonic_visible_energy",   type = "both"    },
     { name = "visible_energy_calosub",    type = "both"    },
     { name = "reco_interaction_type",     type = "reco"    },
 
