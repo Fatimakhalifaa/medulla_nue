@@ -112,7 +112,7 @@ python3 batch/medulla.py -p /pnfs/icarus/scratch/users/faabdalr/bNew_med/nue_sci
 
 
 
-Use job id 30344276.0@jobsub05.fnal.gov
+Use job id 93804665.0@jobsub02.fnal.gov to retrieve output
 
 
 
