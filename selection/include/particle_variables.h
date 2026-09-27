@@ -889,6 +889,36 @@ namespace pvars
      * incoming neutrino direction.
      */
     template<class T>
+    double cos_theta_e(const T & p)
+    {
+        utilities::three_vector l_dir = std::make_tuple(p.start_dir[0], p.start_dir[1], p.start_dir[2]);
+        utilities::three_vector vtx   = std::make_tuple(p.start_point[0], p.start_point[1], p.start_point[2]);
+
+        utilities::three_vector beam = std::make_tuple(
+            31512.0380 + std::get<0>(vtx),
+             3364.4912 + std::get<1>(vtx),
+            73363.2532 + std::get<2>(vtx));
+        utilities::three_vector nu_dir = utilities::normalize(beam);
+
+        return utilities::dot_product(l_dir, nu_dir);
+    }
+    REGISTER_VAR_SCOPE(RegistrationScope::BothParticle, cos_theta_e, cos_theta_e);
+
+    /**
+     * @brief Variable for the cosine of the angle between the particle direction
+     * and the incoming neutrino direction.
+     * @details The cosine of the angle is computed as the dot product of the
+     * particle unit direction vector with the unit neutrino direction vector.
+     * The neutrino direction is approximated event-by-event as the unit vector
+     * from the NuMI target position (31512.0380, 3364.4912, 73363.2532) cm
+     * (in detector coordinates) to the particle start position, consistent
+     * with the definition used in utilities::transverse_momentum.
+     * @tparam T the type of particle (true or reco).
+     * @param p the particle to apply the variable on.
+     * @return the cosine of the angle between the particle direction and the
+     * incoming neutrino direction.
+     */
+    template<class T>
     double cos_theta_mu(const T & p)
     {
         utilities::three_vector l_dir = std::make_tuple(p.start_dir[0], p.start_dir[1], p.start_dir[2]);
