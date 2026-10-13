@@ -33,7 +33,6 @@ fsthresh = [
     "@greater_than",
 ]
 
-
 # =============================================================================
 # Samples — CV + data
 # =============================================================================
@@ -134,7 +133,7 @@ branch = [
     { name = "primary_electron_softmax_cut", type = "reco", parameters = [ "@primary_softmax", "@greater_than" ] },
     { name = "has_particle_multiplicity",    type = "both", parameters = [ 0.0, 2.0, 25.0 ], title = "has_photons"}, 
     { name = "vertex_z_veto_cut",         type = "both", parameters = [-100.0, 100.0] },
-    { name = "crtpmt_veto",               type = "event", parameters = [ "@flash_low_t", "@flash_high_t" ], decrements_exposure = false},
+    #{ name = "crtpmt_veto",               type = "event", parameters = [ "@flash_low_t", "@flash_high_t" ], decrements_exposure = false},
 
     # Vertex & flash
     { name = "vertex_x",                  type = "both" },
