@@ -1,4 +1,3 @@
-
 [input]
 path = '/exp/icarus/data/users/fatima/Medulla_output/NueCC_inclusive_all.root'
 weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p02_redo/*.flat.root'
@@ -6,20 +5,23 @@ weights = '/pnfs/icarus/persistent/users/dcarber/spine/NuMI_CV_ext/v09_89_01_02p
 use_additional_hash = true
 
 [output]
-path = '/exp/icarus/data/users/fatima/Medulla_output/Systematics/nue_mc_signal_ext_sys2.root'
+path = '/exp/icarus/data/users/fatima/Medulla_output/Systematics/nue/nue_xsec_det_sys.root'
 histogram_destination = 'variations/'
 
 [[sysvar]]
-name = 'reco_leading_electron_ke'
-bins = [15, 0, 3000]
+#name = 'reco_leading_electron_p'
+#bins = [15, 0, 3000]
+name = 'reco_visible_energy'
+bins = [30, 0, 5]
 
 [variations]
-keys = [ 'nominal_nue','var00', 'var01p','var01m', 'var02m','var02p', 'var03m', 'var03p','var04m','var04p','var05','var06','var07','var08','var09']
+keys = [ 'cv_nue','var00', 'var01p','var01m', 'var02m','var02p', 'var03m', 'var03p','var04m','var04p','var05','var06','var07','var08','var09']
 origin = 'events/'
 tree = 'selected'
 result_destination = 'detsys_results/'
-variable = 'reco_leading_electron_ke'
-bins = [15, 0, 3000]
+#variable = 'reco_leading_electron_p' # bins = [15, 0, 3000]
+variable = 'reco_visible_energy'
+bins = [30, 0, 5]
 nuniverses = 1000
 variable_length = false
 
@@ -49,21 +51,21 @@ destination = 'events/offbeam/'
 name = 'selected'
 action = 'copy'
 
-[[tree]]
-origin = 'events/cvext/nc_sideband'
-destination = 'events/cvext/'
-name = 'nc_sideband'
-action = 'copy'
-[[tree]]
-origin = 'events/data/nc_sideband'
-destination = 'events/data/'
-name = 'nc_sideband'
-action = 'copy'
-[[tree]]
-origin = 'events/offbeam/nc_sideband'
-destination = 'events/offbeam/'
-name = 'nc_sideband'
-action = 'copy'
+#[[tree]]
+#origin = 'events/cvext/nc_sideband'
+#destination = 'events/cvext/'
+#name = 'nc_sideband'
+#action = 'copy'
+#[[tree]]
+#origin = 'events/data/nc_sideband'
+#destination = 'events/data/'
+#name = 'nc_sideband'
+#action = 'copy'
+#[[tree]]
+#origin = 'events/offbeam/nc_sideband'
+#destination = 'events/offbeam/'
+#name = 'nc_sideband'
+#action = 'copy'
 
 [[sys]]
 name = 'var00'
@@ -71,8 +73,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var00', 'var00', 'var00', 'nominal_nue', 'var00', 'var00', 'var00']
+ordinate = 'cv_nue'
+points = ['var00', 'var00', 'var00', 'cv_nue', 'var00', 'var00', 'var00']
 
 [[sys]]
 name = 'var01'
@@ -80,8 +82,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var01m', 'var01m', 'var01m', 'nominal_nue', 'var01p', 'var01p', 'var01p']
+ordinate = 'cv_nue'
+points = ['var01m', 'var01m', 'var01m', 'cv_nue', 'var01p', 'var01p', 'var01p']
 
 [[sys]]
 name = 'var02'
@@ -89,8 +91,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var02m', 'var02m', 'var02m', 'nominal_nue', 'var02p', 'var02p', 'var02p']
+ordinate = 'cv_nue'
+points = ['var02m', 'var02m', 'var02m', 'cv_nue', 'var02p', 'var02p', 'var02p']
 
 [[sys]]
 name = 'var03'
@@ -98,8 +100,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [3, 2, 1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var03m', 'var03m', 'var03m', 'nominal_nue', 'var03p', 'var03p', 'var03p']
+ordinate = 'cv_nue'
+points = ['var03m', 'var03m', 'var03m', 'cv_nue', 'var03p', 'var03p', 'var03p']
 
 [[sys]]
 name = 'var04'
@@ -107,8 +109,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var04m', 'var04m', 'var04m', 'nominal_nue', 'var04p', 'var04p', 'var04p']
+ordinate = 'cv_nue'
+points = ['var04m', 'var04m', 'var04m', 'cv_nue', 'var04p', 'var04p', 'var04p']
 
 [[sys]]
 name = 'var05'
@@ -116,8 +118,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var05', 'var05', 'var05', 'nominal_nue', 'var05', 'var05', 'var05']
+ordinate = 'cv_nue'
+points = ['var05', 'var05', 'var05', 'cv_nue', 'var05', 'var05', 'var05']
 
 [[sys]]
 name = 'var06'
@@ -125,8 +127,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var06', 'var06', 'var06', 'nominal_nue', 'var06', 'var06', 'var06']
+ordinate = 'cv_nue'
+points = ['var06', 'var06', 'var06', 'cv_nue', 'var06', 'var06', 'var06']
 
 [[sys]]
 name = 'var07'
@@ -134,8 +136,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var07', 'var07', 'var07', 'nominal_nue', 'var07', 'var07', 'var07']
+ordinate = 'cv_nue'
+points = ['var07', 'var07', 'var07', 'cv_nue', 'var07', 'var07', 'var07']
 
 [[sys]]
 name = 'var08'
@@ -143,8 +145,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var08', 'var08', 'var08', 'nominal_nue', 'var08', 'var08', 'var08']
+ordinate = 'cv_nue'
+points = ['var08', 'var08', 'var08', 'cv_nue', 'var08', 'var08', 'var08']
 
 [[sys]]
 name = 'var09'
@@ -152,8 +154,8 @@ type = 'variation'
 index = -1
 nsigma = [-3, -2, -1, 0, 1 ,2, 3]
 scale = [-3, -2, -1, 1, 1, 2, 3]
-ordinate = 'nominal_nue'
-points = ['var09', 'var09', 'var09', 'nominal_nue', 'var09', 'var09', 'var09']
+ordinate = 'cv_nue'
+points = ['var09', 'var09', 'var09', 'cv_nue', 'var09', 'var09', 'var09']
 
 [[sys]]
 name = 'GENIEReWeight_SBN_v1_multisigma_ZExpA1CCQE'
